@@ -17,10 +17,10 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
     public List<Cliente> obtenerTodosLosClientes(){
-        return clienteRepository.findAll();
+        return clienteRepository.findAllByBajaFalse();
     }
     public Optional<Cliente> obtenerClientePorId(Long id){
-        return clienteRepository.findById(id);
+        return clienteRepository.findByIdAndBajaFalse(id);
     }
     public Optional<Cliente> actualizaCliente(Long id, Cliente clienteDetalles){
         return clienteRepository.findById(id)
