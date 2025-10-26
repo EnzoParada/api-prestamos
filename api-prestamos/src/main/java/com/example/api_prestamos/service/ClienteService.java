@@ -1,6 +1,7 @@
 package com.example.api_prestamos.service;
 
 import com.example.api_prestamos.model.Cliente;
+import com.example.api_prestamos.model.Prestamo;
 import com.example.api_prestamos.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,11 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
 
     public Cliente CrearCliente(Cliente cliente){
+        if(cliente.getPrestamos() != null && !cliente.getPrestamos().isEmpty()){
+            for (Prestamo prestamo : cliente.getPrestamos()){
+                prestamo.setCliente(cliente);
+            }
+        }
         return clienteRepository.save(cliente);
     }
     public List<Cliente> obtenerTodosLosClientes(){
