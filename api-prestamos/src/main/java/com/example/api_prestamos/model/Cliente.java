@@ -18,6 +18,8 @@ public class Cliente {
     @Column(unique = true, nullable = false)
     private String dni;
 
+    private boolean baja = false;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Prestamo> prestamos;
 }

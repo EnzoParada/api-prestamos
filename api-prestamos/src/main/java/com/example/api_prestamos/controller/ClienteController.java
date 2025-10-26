@@ -33,4 +33,20 @@ public class ClienteController {
                 .map(cliente -> new ResponseEntity<>(cliente, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> actualizarCliente(
+            @PathVariable Long id,
+            @RequestBody Cliente clienteDetalles){
+
+        return clienteService.actualizaCliente(id, clienteDetalles)
+                .map(clienteActualizado -> new ResponseEntity<>(clienteActualizado, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> bajaCliente(@PathVariable Long id){
+        clienteService.bajaCliente(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

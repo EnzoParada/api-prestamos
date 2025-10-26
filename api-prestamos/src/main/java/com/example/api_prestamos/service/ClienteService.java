@@ -22,4 +22,24 @@ public class ClienteService {
     public Optional<Cliente> obtenerClientePorId(Long id){
         return clienteRepository.findById(id);
     }
+    public Optional<Cliente> actualizaCliente(Long id, Cliente clienteDetalles){
+        return clienteRepository.findById(id)
+                .map(clienteExistente ->{
+                    clienteExistente.setNombre(clienteDetalles.getNombre());
+                    clienteExistente.setApellido(clienteDetalles.getApellido());
+                    clienteExistente.setDni(clienteDetalles.getDni());
+                    return clienteRepository.save(clienteExistente);
+                });
+    }
+    public void bajaCliente(Long id){
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+
+        if (clienteOpt.isPresent()){
+            Cliente cliente = clienteOpt.get();
+            cliente.setBaja(true);
+            clienteRepository.save(cliente);
+        }else{
+            throw new RuntimeException("Cliente no encontrado");
+        }
+    }
 }
